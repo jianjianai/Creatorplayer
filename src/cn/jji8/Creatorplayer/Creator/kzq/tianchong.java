@@ -2,7 +2,9 @@ package cn.jji8.Creatorplayer.Creator.kzq;
 
 import cn.jji8.Creatorplayer.Creator.dian;
 import cn.jji8.Creatorplayer.main;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.data.type.Fire;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -29,35 +31,35 @@ public class tianchong implements kzq{
 
         //加载填充按钮
         String s;
-        if(main.getmian().getConfig().contains("填充按钮")){
-            s = main.getmian().getConfig().getString("填充按钮");
+        if(pz.contains("填充按钮")){
+            s = pz.getString("填充按钮");
         }else {
             main.getmian().getLogger().warning("未找到填充按钮配置，已重新生成");
-            main.getmian().getConfig().set("填充按钮","WOODEN_AXE");
+            pz.set("填充按钮","WOODEN_AXE");
             s = "WOODEN_AXE";
             baocun =true;
         }
         ItemStack wp = new ItemStack(Material.getMaterial(s));
         ItemMeta wpsj = wp.getItemMeta();
         String y;
-        if(main.getmian().getConfig().contains("按钮名字")){
-            y = main.getmian().getConfig().getString("按钮名字");
+        if(pz.contains("按钮名字")){
+            y = pz.getString("按钮名字");
         }else {
             main.getmian().getLogger().warning("未找到按钮名字配置，已重新生成");
-            main.getmian().getConfig().set("按钮名字","使用下方方块填充选区");
+            pz.set("按钮名字","使用下方方块填充选区");
             y = "使用下方方块填充选区";
             baocun =true;
         }
         wpsj.setDisplayName(y);
         List<String> k;
-        if(main.getmian().getConfig().contains("按钮简介")){
-            k = main.getmian().getConfig().getStringList("按钮简介");
+        if(pz.contains("按钮简介")){
+            k = pz.getStringList("按钮简介");
         }else {
             main.getmian().getLogger().warning("未找到按钮简介配置，已重新生成");
             k = new ArrayList<String>();
             k.add("将想填充的方块放在下方格子中");
             k.add("点击即可填充");
-            main.getmian().getConfig().set("按钮简介",k);
+            pz.set("按钮简介",k);
             baocun =true;
         }
         wpsj.setLore(k);
@@ -107,6 +109,68 @@ public class tianchong implements kzq{
         }
         点击位置.setCancelled(true);
         if(main.getmian().peizhi.debug){System.out.println("玩家点击了填充按钮");}
-        if(main.getmian().peizhi.debug){System.out.println("准备填充"+箱子.getItem(填充物品放置位置).getType());}
+        ItemStack wp = 箱子.getItem(填充物品放置位置);
+        if(main.getmian().peizhi.debug){System.out.println("准备填充"+(wp==null?"null":wp.getType()));}
+        tiancun(wp==null?Material.AIR:wp.getType());
+    }
+
+    //填充方法，用于填充方块
+    void tiancun(Material wp){
+        try {
+            dian.getWeizi1().getWorld();
+            dian.getWeizi2().getWorld();
+            if(main.peizhi.debug)System.out.println("开始填充");
+        }catch (NullPointerException h){
+            return;//玩家没有选择点
+        }
+        World world1= dian.getWeizi1().getWorld();
+        double x1 = dian.getWeizi1().getBlockX();
+        double y1 = dian.getWeizi1().getBlockY();
+        double z1 = dian.getWeizi1().getBlockZ();
+
+        World world2 = dian.getWeizi2().getWorld();
+        double x2 = dian.getWeizi2().getBlockX();
+        double y2 = dian.getWeizi2().getBlockY();
+        double z2 = dian.getWeizi2().getBlockZ();
+        if(!world1.equals(world2)){
+            return;
+        }
+        if(!wp.isBlock()){
+            return;
+        }
+
+        tiancun3(world1,wp,x1,x2,y1,y2,z1,z2);
+    }
+    void tiancun3(World world,Material wp,double x1,double x2,double y1,double y2,double z1,double z2){
+        if(z1>z2){
+            double a = z1;
+            z1 = z2;
+            z2 = a;
+        }
+        for(double i = z1;i<=z2;i++) {
+            tiancun2(world,wp,x1,x2,y1,y2,i);
+        }
+    }
+    void tiancun2(World world,Material wp,double x1,double x2,double y1,double y2,double z){
+        if(y1>y2){
+            double a = y1;
+            y1 = y2;
+            y2 = a;
+        }
+        for(double i = y1;i<=y2;i++) {
+            tiancun1(world, wp, x1, x2, i, z);
+        }
+    }
+
+    void tiancun1(World world,Material wp,double x1,double x2,double y,double z){
+        if(x1>x2){
+            double a = x1;
+            x1 = x2;
+            x2 = a;
+        }
+        for(double i = x1;i<=x2;i++){
+            new Location(world,i,y,z).getBlock().setType(wp);
+        }
+
     }
 }
