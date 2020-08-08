@@ -2,6 +2,7 @@ package cn.jji8.Creatorplayer.Creator;
 
 import cn.jji8.Creatorplayer.Creator.kzq.kzq;
 import cn.jji8.Creatorplayer.main;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -22,9 +23,9 @@ public class gui {
     dian dian;
     Inventory xiangzi;
 
-    gui(String name){
-        dian = new dian(name);
-        xiangzi = org.bukkit.Bukkit.createInventory(null,6*9, main.peizhi.箱子标题.replaceAll("%玩家%",name));
+    gui(Player wanjia){
+        dian = new dian(wanjia);
+        xiangzi = org.bukkit.Bukkit.createInventory(null,main.peizhi.箱子大小*9, main.peizhi.箱子标题.replaceAll("%玩家%",wanjia.getName()));
         for(int i = 0;i<初始化控制器.size();i++){
             wanjiakzq.add(初始化控制器.get(i).get(dian,xiangzi));
         }
@@ -33,7 +34,7 @@ public class gui {
         for(int i = 0;i<wanjiakzq.size();i++){
             wanjiakzq.get(i).jiazai();
         }
-        org.bukkit.Bukkit.getPlayer(dian.getWanjiamingzi()).openInventory(xiangzi);
+        dian.getwanjia().openInventory(xiangzi);
     }
 
     public void dianji(InventoryClickEvent a){

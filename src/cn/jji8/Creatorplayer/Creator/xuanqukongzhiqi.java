@@ -2,6 +2,7 @@ package cn.jji8.Creatorplayer.Creator;
 
 import cn.jji8.Creatorplayer.main;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.HashMap;
@@ -16,27 +17,29 @@ public class xuanqukongzhiqi{
     /**
      * 玩家左键调用
      * */
-    public void dianjizuo(String 玩家名字, Location weizi){
+    public void dianjizuo(Player 玩家名字, Location weizi){
         tianjiawanjia(玩家名字);//如果表里没有玩家就添加玩家
-        wanjia wanjia = biao.get(玩家名字);
+        wanjia wanjia = biao.get(玩家名字.getName());
         wanjia.getGui().getDian().setWeizi1(weizi);
+        wanjia.getGui().getDian().xianshi();
+
     }
     /**
      * 玩家点击右边调用
      * */
-    public void dianjiyou(String 玩家名字,Location weizi){//点击右键时调用
+    public void dianjiyou(Player 玩家名字,Location weizi){//点击右键时调用
         tianjiawanjia(玩家名字);//如果表里没有玩家就添加玩家
-        wanjia wanjia = biao.get(玩家名字);
+        wanjia wanjia = biao.get(玩家名字.getName());
         wanjia.getGui().getDian().setWeizi2(weizi);
+        wanjia.getGui().getDian().xianshi();
     }
 
-    public void anF(String 玩家名字){//按f时调用
+    public void anF(Player 玩家名字){//按f时调用
         tianjiawanjia(玩家名字);//如果表里没有玩家就添加玩家
-        wanjia wanjia = biao.get(玩家名字);
-        biao.get(玩家名字).getGui().dakai();
+        biao.get(玩家名字.getName()).getGui().dakai();
     }
 
-    public void dianjibb(InventoryClickEvent a){
+    public void dianjibb(InventoryClickEvent a){//点击箱子时调用
         if(a.getClickedInventory()==null){//判断点击的箱子是否为空
             return;
         }
@@ -48,10 +51,13 @@ public class xuanqukongzhiqi{
         if(main.peizhi.debug){System.out.println("玩家"+a.getWhoClicked().getName()+"点击了gui");}
     }
 
-    void tianjiawanjia(String 玩家名字){
-        if(!biao.containsKey(玩家名字)){//判断表里是否有此玩家
-            biao.put(玩家名字,new wanjia(玩家名字));//没有就添加一个
+    void tianjiawanjia(Player 玩家名字){
+        if(!biao.containsKey(玩家名字.getName())){//判断表里是否有此玩家
+            biao.put(玩家名字.getName(),new wanjia(玩家名字));//没有就添加一个
             if(main.peizhi.debug){System.out.println("表中没有玩家"+玩家名字+"添加玩家");}
         }
+    }
+    public void likai(Player a){
+        biao.remove(a.getName());
     }
 }

@@ -9,6 +9,7 @@ public class peizhi {
     public Material xuanquwupin;
     public boolean debug;
     public String 箱子标题;
+    public int 箱子大小;
 
     public peizhi(){
         boolean baocunpeizhi = false;
@@ -21,6 +22,15 @@ public class peizhi {
             main.getmian().getLogger().warning("未找到debug配置，已重新生成");
             main.getmian().getConfig().set("debug",false);
             debug = false;
+            baocunpeizhi =true;
+        }
+        //箱子大小
+        if(main.getmian().getConfig().contains("箱子大小")){
+            箱子大小 = main.getmian().getConfig().getInt("箱子大小");
+        }else {
+            main.getmian().getLogger().warning("未找到箱子大小配置，已重新生成");
+            main.getmian().getConfig().set("箱子大小",3);
+            箱子大小 = 3;
             baocunpeizhi =true;
         }
         //加载选取工具

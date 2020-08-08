@@ -1,12 +1,12 @@
 package cn.jji8.Creatorplayer.Creator;
 
 import cn.jji8.Creatorplayer.main;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 /**
@@ -27,10 +27,12 @@ public class xuanze implements Listener {
         }
         a.setCancelled(true);
         if(a.getAction().equals(Action.LEFT_CLICK_BLOCK)){//玩家左键一个方块
-            xuanqukongzhiqi.dianjizuo(a.getPlayer().getName(),a.getClickedBlock().getLocation());
+            xuanqukongzhiqi.dianjizuo(a.getPlayer(),a.getClickedBlock().getLocation());
+            a.getPlayer().sendTitle("","已选择第一个点",0,10,40);
             if(main.peizhi.debug){System.out.println("玩家"+a.getPlayer().getName()+"选择第一个点"+a.getClickedBlock().getLocation());}
         }else if(a.getAction().equals(Action.RIGHT_CLICK_BLOCK)){//玩家右键一个方块
-            xuanqukongzhiqi.dianjiyou(a.getPlayer().getName(),a.getClickedBlock().getLocation());
+            xuanqukongzhiqi.dianjiyou(a.getPlayer(),a.getClickedBlock().getLocation());
+            a.getPlayer().sendTitle("","已选择第二个点",0,10,40);
             if(main.peizhi.debug){System.out.println("玩家"+a.getPlayer().getName()+"选择第二个点"+a.getClickedBlock().getLocation());}
         }
     }
@@ -41,7 +43,7 @@ public class xuanze implements Listener {
             return;
         }else if(a.getOffHandItem().getType().equals(main.peizhi.xuanquwupin)){
             a.setCancelled(true);
-            xuanqukongzhiqi.anF(a.getPlayer().getName());
+            xuanqukongzhiqi.anF(a.getPlayer());
             if(main.peizhi.debug){System.out.println("玩家"+a.getPlayer().getName()+"手持选择物品按下F");}
         }
     }
@@ -49,5 +51,10 @@ public class xuanze implements Listener {
     @EventHandler
     public void dianjixiangzi(InventoryClickEvent a){//玩家点击物品栏时触发
         xuanqukongzhiqi.dianjibb(a);
+    }
+
+    @EventHandler
+    public void tuicu(PlayerQuitEvent a){//玩家点击物品栏时触发
+        xuanqukongzhiqi.likai(a.getPlayer());
     }
 }

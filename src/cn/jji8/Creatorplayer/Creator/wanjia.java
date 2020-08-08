@@ -1,9 +1,11 @@
 package cn.jji8.Creatorplayer.Creator;
 
+import org.bukkit.entity.Player;
+
 public class wanjia {
     gui gui;
-    wanjia(String name){
-        gui = new gui(name);
+    wanjia(Player wanjia){
+        gui = new gui(wanjia);
     }
 
 
