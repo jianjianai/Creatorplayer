@@ -2,6 +2,7 @@ package cn.jji8.Creatorplayer.Creator;
 
 import cn.jji8.Creatorplayer.main;
 import org.bukkit.Location;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.HashMap;
 
@@ -33,6 +34,18 @@ public class xuanqukongzhiqi{
         tianjiawanjia(玩家名字);//如果表里没有玩家就添加玩家
         wanjia wanjia = biao.get(玩家名字);
         biao.get(玩家名字).getGui().dakai();
+    }
+
+    public void dianjibb(InventoryClickEvent a){
+        if(a.getClickedInventory()==null){//判断点击的箱子是否为空
+            return;
+        }
+        wanjia wanjia = biao.get(a.getWhoClicked().getName());
+        if(!a.getClickedInventory().equals(wanjia.getGui().getXiangzi())){//判断点击的箱子是否是gui
+            return;
+        }
+        wanjia.getGui().dianji(a);
+        if(main.peizhi.debug){System.out.println("玩家"+a.getWhoClicked().getName()+"点击了gui");}
     }
 
     void tianjiawanjia(String 玩家名字){

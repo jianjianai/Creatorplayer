@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
@@ -35,12 +36,18 @@ public class xuanze implements Listener {
     }
 
     @EventHandler
-    public void wanjiaF(PlayerSwapHandItemsEvent a){
+    public void wanjiaF(PlayerSwapHandItemsEvent a){//玩家按f时触发
         if(a.getOffHandItem()==null){
             return;
         }else if(a.getOffHandItem().getType().equals(main.peizhi.xuanquwupin)){
-
+            a.setCancelled(true);
+            xuanqukongzhiqi.anF(a.getPlayer().getName());
             if(main.peizhi.debug){System.out.println("玩家"+a.getPlayer().getName()+"手持选择物品按下F");}
         }
+    }
+
+    @EventHandler
+    public void dianjixiangzi(InventoryClickEvent a){//玩家点击物品栏时触发
+        xuanqukongzhiqi.dianjibb(a);
     }
 }

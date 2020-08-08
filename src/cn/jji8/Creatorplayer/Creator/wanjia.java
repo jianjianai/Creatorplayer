@@ -7,7 +7,6 @@ public class wanjia {
     }
 
 
-
 //set get 方法
     public cn.jji8.Creatorplayer.Creator.gui getGui() {
         return gui;

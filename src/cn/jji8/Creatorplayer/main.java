@@ -1,5 +1,7 @@
 package cn.jji8.Creatorplayer;
 
+import cn.jji8.Creatorplayer.Creator.gui;
+import cn.jji8.Creatorplayer.Creator.kzq.tianchong;
 import cn.jji8.Creatorplayer.Creator.xuanze;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
@@ -31,6 +33,9 @@ public class main extends JavaPlugin {
         }else {
             getLogger().info("Residence领地插件未加载，不启用兼容功能");
         }
+
+        //加载控制器
+        gui.addkzq(new tianchong());//填充控制器
 
         Bukkit.getPluginManager().registerEvents(new xuanze(),this);
 
