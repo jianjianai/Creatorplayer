@@ -34,11 +34,17 @@ public class xuanqukongzhiqi{
         wanjia.getGui().getDian().xianshi();
     }
 
+    /**
+     * 代表这个玩家使用选区物品按f
+     * */
     public void anF(Player 玩家名字){//按f时调用
         tianjiawanjia(玩家名字);//如果表里没有玩家就添加玩家
         biao.get(玩家名字.getName()).getGui().dakai();
     }
 
+    /**
+     * 当有点击事件时被调用
+     * */
     public void dianjibb(InventoryClickEvent a){//点击箱子时调用
         if(a.getClickedInventory()==null){//判断点击的箱子是否为空
             return;
@@ -51,12 +57,18 @@ public class xuanqukongzhiqi{
         if(main.peizhi.debug){System.out.println("玩家"+a.getWhoClicked().getName()+"点击了gui");}
     }
 
+    /**
+     * 添加玩家，调用此方法会判断表里是否有此玩家，如果没有就添加并且自动初始化
+     * */
     void tianjiawanjia(Player 玩家名字){
         if(!biao.containsKey(玩家名字.getName())){//判断表里是否有此玩家
             biao.put(玩家名字.getName(),new wanjia(玩家名字));//没有就添加一个
             if(main.peizhi.debug){System.out.println("表中没有玩家"+玩家名字+"添加玩家");}
         }
     }
+    /**
+     * 当玩家离开服务器时调用此方法删除玩家
+     * */
     public void likai(Player a){
         biao.remove(a.getName());
     }

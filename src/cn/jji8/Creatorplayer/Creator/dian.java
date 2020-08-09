@@ -20,6 +20,9 @@ public class dian {
         wanjia = w;
     }
 
+    /**
+     * 用于显示两点选择的范围，全是多线程的
+     * */
     public void xianshi(){
         Thread T = new Thread(){
             @Override
@@ -75,7 +78,7 @@ public class dian {
         };
         T.start();
     }
-    public void xianshix(Player player, World world, double x1, double y, double z, double x2){
+    void xianshix(Player player, World world, double x1, double y, double z, double x2){
         if(x1>x2){
             double a = x1;
             x1 = x2;
@@ -86,7 +89,7 @@ public class dian {
             player.spawnParticle(Particle.FLAME,a,0);
         }
     }
-    public void xianshiy(Player player, World world, double x, double y1, double z, double y2){
+    void xianshiy(Player player, World world, double x, double y1, double z, double y2){
         if(y1>y2){
             double a = y1;
             y1 = y2;
@@ -97,7 +100,7 @@ public class dian {
             player.spawnParticle(Particle.FLAME,a,0);
         }
     }
-    public void xianshiz(Player player, World world, double x, double y, double z1, double z2){
+    void xianshiz(Player player, World world, double x, double y, double z1, double z2){
         if(z1>z2){
             double a = z1;
             z1 = z2;

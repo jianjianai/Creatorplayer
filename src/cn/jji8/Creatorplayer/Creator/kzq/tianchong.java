@@ -28,6 +28,9 @@ import java.util.Map;
 
 public class tianchong implements kzq{
 
+    /**
+     * 用于加载配置，被添加到控制器中时自动调用
+     * */
     public void peizi(){//加载填充配置
         YamlConfiguration pz = YamlConfiguration.loadConfiguration(new File(main.getmian().getDataFolder(),"填充配置.yml"));
         boolean baocun = false;
@@ -75,6 +78,47 @@ public class tianchong implements kzq{
         wp.setItemMeta(wpsj);
         填充按钮 = wp;
 
+        //加载取消按钮
+        if(pz.contains("取消按钮")){
+            s = pz.getString("取消按钮");
+        }else {
+            main.getmian().getLogger().warning("未找到取消按钮配置，已重新生成");
+            pz.set("取消按钮","REDSTONE_BLOCK");
+            s = "REDSTONE_BLOCK";
+            baocun =true;
+        }
+        wp = new ItemStack(Material.getMaterial(s));
+        wpsj = wp.getItemMeta();
+        if(pz.contains("取消按钮名字")){
+            y = pz.getString("取消按钮名字");
+        }else {
+            main.getmian().getLogger().warning("未找到取消按钮按钮名字配置，已重新生成");
+            pz.set("取消按钮按钮名字","取消填充");
+            y = "取消填充";
+            baocun =true;
+        }
+        wpsj.setDisplayName(y);
+        List<String> kk;
+        if(pz.contains("取消按钮按钮简介")){
+            kk = pz.getStringList("取消按钮按钮简介");
+        }else {
+            main.getmian().getLogger().warning("未找到取消按钮按钮简介配置，已重新生成");
+            kk = new ArrayList<String>();
+            kk.add("取消正在执行的填充");
+            pz.set("按钮简介",kk);
+            baocun =true;
+        }
+        wpsj.setLore(k);
+        wp.setItemMeta(wpsj);
+        取消按钮 = wp;
+
+        //取消按钮位置
+        if(!pz.contains("取消按钮位置")){
+            pz.set("取消按钮位置",18);
+            baocun = true;
+        }
+        取消按钮位置 = pz.getInt("取消按钮位置");
+
         //填充物品放置位置
         if(!pz.contains("填充物品放置位置")){
             pz.set("填充物品放置位置",9);
@@ -109,10 +153,13 @@ public class tianchong implements kzq{
 //------------------------------------------------------------------------
     dian dian;
     Inventory 箱子;
+    boolean 取消 = false;
 
-    static int 填充按钮位置,填充物品放置位置,每秒最大填充方块量,一次最大数量;
-    static ItemStack 填充按钮;
-
+    static int 填充按钮位置,填充物品放置位置,每秒最大填充方块量,一次最大数量,取消按钮位置;
+    static ItemStack 填充按钮,取消按钮;
+    /**
+     * 获取一个新的自己，加载一个新gui时调用，每个gui存一个控制器
+     * */
     @Override
     public kzq get(dian 选择点, Inventory 箱子) {
         tianchong a = new tianchong();
@@ -120,14 +167,25 @@ public class tianchong implements kzq{
         a.箱子 = 箱子;
         return a;
     }
-
+    /**
+     * 玩家打开gui时调用，或者玩家点击gui后调用
+     * */
     @Override
     public void jiazai(){
         箱子.setItem(填充按钮位置,填充按钮);
+        箱子.setItem(取消按钮位置,取消按钮);
     }
-
+    /**
+     * 玩家点击gui后调用
+     * */
     @Override
     public void dianji(InventoryClickEvent 点击位置) {
+        if(点击位置.getRawSlot()==取消按钮位置){
+            点击位置.setCancelled(true);
+            点击位置.getWhoClicked().closeInventory();
+            取消 = true;
+            dian.wanjia.sendTitle("","已取消填充",0,10,40);
+        }
         if(!(点击位置.getRawSlot() == 填充按钮位置)){
             return;
         }
@@ -145,6 +203,7 @@ public class tianchong implements kzq{
         Thread T = new Thread(){
             @Override
             public void run() {
+                取消 = false;
                 tiancun(wp==null?Material.AIR:wp.getType());
                 正在填充 = false;
                 计数 = 0;
@@ -153,7 +212,9 @@ public class tianchong implements kzq{
         T.start();
     }
 
-    //填充方法，用于填充方块
+    /**
+     * 填充方法，用于填充方块
+     */
     void tiancun(Material wp){
         try {
             dian.getWeizi1().getWorld();
@@ -199,6 +260,7 @@ public class tianchong implements kzq{
 
         tiancun3(world1,wp,x1,x2,y1,y2,z1,z2);
     }
+
     void tiancun3(World world,Material wp,double x1,double x2,double y1,double y2,double z1,double z2){
         if(z1>z2){
             double a = z1;
@@ -231,6 +293,9 @@ public class tianchong implements kzq{
             x2 = a;
         }
         for(double i = x1;i<=x2;i++){
+            if(取消){
+                return;
+            }
             if(填充数量>每秒最大填充方块量){
                 try {
                     dian.wanjia.sendTitle("","正在填充，已填充"+计数+"方块",0,10,40);
@@ -259,6 +324,5 @@ public class tianchong implements kzq{
                 填充数量++;
             }
         }
-
     }
 }

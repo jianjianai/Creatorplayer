@@ -1,6 +1,7 @@
 package cn.jji8.Creatorplayer;
 
 import cn.jji8.Creatorplayer.Creator.gui;
+import cn.jji8.Creatorplayer.Creator.kzq.fuzhi;
 import cn.jji8.Creatorplayer.Creator.kzq.lizi;
 import cn.jji8.Creatorplayer.Creator.kzq.tianchong;
 import cn.jji8.Creatorplayer.Creator.xuanze;
@@ -44,6 +45,8 @@ public class main extends JavaPlugin {
         //加载控制器
         gui.addkzq(new tianchong());//填充控制器
         gui.addkzq(new lizi());//粒子控制器
+        gui.addkzq(new fuzhi());//复制控制器
+
 
         Bukkit.getPluginManager().registerEvents(new xuanze(),this);
 

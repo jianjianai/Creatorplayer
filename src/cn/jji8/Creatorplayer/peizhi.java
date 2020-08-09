@@ -4,7 +4,9 @@ import org.bukkit.Material;
 
 import java.io.File;
 import java.io.IOException;
-
+/**
+ * 用于加载插件全局配置
+ * */
 public class peizhi {
     public Material xuanquwupin;
     public boolean debug,只允许在自己领地中使用创作者;

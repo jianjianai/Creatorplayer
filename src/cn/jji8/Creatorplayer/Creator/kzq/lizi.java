@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class lizi implements kzq{
+    /**
+     * 用于加载配置，被添加到控制器中时自动调用
+     * */
     @Override
     public void peizi() {
         YamlConfiguration pz = YamlConfiguration.loadConfiguration(new File(main.getmian().getDataFolder(),"粒子配置.yml"));
@@ -123,6 +126,9 @@ public class lizi implements kzq{
         }
 
     }
+    /**
+     * 获取一个新的自己，加载一个新gui时调用，每个gui存一个控制器
+     * */
     @Override
     public kzq get(dian 选择点, Inventory 箱子) {
         lizi a = new lizi();
@@ -140,7 +146,9 @@ public class lizi implements kzq{
     static int 最大显示时间,按钮位置,填充物品放置位置;
     static ItemStack 按钮,填充按钮;
 
-
+    /**
+     * 玩家打开gui时调用，或者玩家点击gui后调用
+     * */
     @Override
     public void jiazai() {
         箱子.setItem(按钮位置,按钮);
@@ -151,6 +159,9 @@ public class lizi implements kzq{
         }
     }
 
+    /**
+     * 玩家点击gui后调用
+     * */
     @Override
     public void dianji(InventoryClickEvent 点击位置) {
         boolean f = false;

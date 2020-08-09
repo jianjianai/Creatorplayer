@@ -16,6 +16,10 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
  * */
 public class xuanze implements Listener {
     xuanqukongzhiqi xuanqukongzhiqi = new xuanqukongzhiqi();
+
+    /**
+     * 用于监听玩家点击事件，判断是否使用指定物品
+     * */
     @EventHandler
     public void wanjiadianji(PlayerInteractEvent a){//玩家点击时触发
         if(a.getItem()==null){//判断玩家手中是否有物品
@@ -35,6 +39,9 @@ public class xuanze implements Listener {
         }
     }
 
+    /**
+     * 监听玩家按F事件，判断是否是指定物品
+     * */
     @EventHandler
     public void wanjiaF(PlayerSwapHandItemsEvent a){//玩家按f时触发
         if(a.getOffHandItem()==null){
@@ -46,13 +53,19 @@ public class xuanze implements Listener {
         }
     }
 
+    /**
+     * 监听玩家点击物品栏
+     * */
     @EventHandler
     public void dianjixiangzi(InventoryClickEvent a){//玩家点击物品栏时触发
         xuanqukongzhiqi.dianjibb(a);
     }
 
+    /**
+     * 监听玩家退出服务器
+     * */
     @EventHandler
-    public void tuicu(PlayerQuitEvent a){//玩家点击物品栏时触发
+    public void tuicu(PlayerQuitEvent a){
         xuanqukongzhiqi.likai(a.getPlayer());
     }
 }
