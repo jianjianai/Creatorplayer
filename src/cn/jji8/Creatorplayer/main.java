@@ -4,6 +4,7 @@ import cn.jji8.Creatorplayer.Creator.gui;
 import cn.jji8.Creatorplayer.Creator.kzq.lizi;
 import cn.jji8.Creatorplayer.Creator.kzq.tianchong;
 import cn.jji8.Creatorplayer.Creator.xuanze;
+import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -12,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class main extends JavaPlugin {
     static main main;
     public static peizhi peizhi;
+    public static boolean res = false;
     //获取main
     public static main getmian(){
         return main;
@@ -29,9 +31,14 @@ public class main extends JavaPlugin {
             if(!p.isEnabled()) {
                 getLogger().info("检测到Residence，与检测到Residence对接");
                 pm.enablePlugin(p);
+                res = true;
             }
         } else {
             getLogger().info("没有安装Residence取消Residence的全部功能");
+        }
+        //加载创作者标识
+        if(res) {
+            FlagPermissions.addFlag("build");
         }
 
         //加载控制器

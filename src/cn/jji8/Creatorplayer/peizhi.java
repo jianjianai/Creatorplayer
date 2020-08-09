@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class peizhi {
     public Material xuanquwupin;
-    public boolean debug;
+    public boolean debug,只允许在自己领地中使用创作者;
     public String 箱子标题;
     public int 箱子大小;
 
@@ -15,6 +15,15 @@ public class peizhi {
         boolean baocunpeizhi = false;
         main.getmian().getLogger().info("开始加载配置");
         String s;
+        //只允许在自己领地中使用创作者
+        if(main.getmian().getConfig().contains("只允许在自己领地中使用创作者")){
+            只允许在自己领地中使用创作者 = main.getmian().getConfig().getBoolean("只允许在自己领地中使用创作者");
+        }else {
+            main.getmian().getLogger().warning("未找到只允许在自己领地中使用创作者配置，已重新生成");
+            main.getmian().getConfig().set("只允许在自己领地中使用创作者",true);
+            只允许在自己领地中使用创作者 = true;
+            baocunpeizhi =true;
+        }
         //debug
         if(main.getmian().getConfig().contains("debug")){
             debug = main.getmian().getConfig().getBoolean("debug");

@@ -28,11 +28,9 @@ public class xuanze implements Listener {
         a.setCancelled(true);
         if(a.getAction().equals(Action.LEFT_CLICK_BLOCK)){//玩家左键一个方块
             xuanqukongzhiqi.dianjizuo(a.getPlayer(),a.getClickedBlock().getLocation());
-            a.getPlayer().sendTitle("","已选择第一个点",0,10,40);
             if(main.peizhi.debug){System.out.println("玩家"+a.getPlayer().getName()+"选择第一个点"+a.getClickedBlock().getLocation());}
         }else if(a.getAction().equals(Action.RIGHT_CLICK_BLOCK)){//玩家右键一个方块
             xuanqukongzhiqi.dianjiyou(a.getPlayer(),a.getClickedBlock().getLocation());
-            a.getPlayer().sendTitle("","已选择第二个点",0,10,40);
             if(main.peizhi.debug){System.out.println("玩家"+a.getPlayer().getName()+"选择第二个点"+a.getClickedBlock().getLocation());}
         }
     }

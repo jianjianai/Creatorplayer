@@ -2,6 +2,8 @@ package cn.jji8.Creatorplayer.Creator.kzq;
 
 import cn.jji8.Creatorplayer.Creator.dian;
 import cn.jji8.Creatorplayer.main;
+import com.bekvon.bukkit.residence.api.ResidenceApi;
+import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.google.common.collect.ComparisonChain;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -178,6 +180,14 @@ public class tianchong implements kzq{
             dian.wanjia.sendTitle("","这不是一个可以放置的方块",0,10,40);
             return;
         }
+
+        if(main.res){
+            if(!ResidenceApi.getResidenceManager().getByLoc(dian.getWeizi1()).equals(ResidenceApi.getResidenceManager().getByLoc(dian.getWeizi2()))){
+                dian.wanjia.sendTitle("","你的两个点在不同领地，不可以填充哦",0,10,40);
+                return;
+            }
+        }
+
         double suliang = (x1-x2)*(y1-y2)*(z1-z2);
         if(suliang<0){
             suliang = suliang*-1;
@@ -235,12 +245,18 @@ public class tianchong implements kzq{
                 BukkitRunnable BukkitRunnable = new BukkitRunnable() {
                     @Override
                     public void run() {
+                        if(main.res){
+                            if(!ResidenceApi.getResidenceManager().getByLoc(blcock.getLocation()).getPermissions().playerHas(dian.wanjia.getName(),"build",true)){
+                                dian.wanjia.sendTitle("","无权限，已填充"+计数+"方块",0,10,40);
+                                return;
+                            }
+                        }
                         blcock.setType(wp);
+                        计数++;
                     }
                 };
                 BukkitRunnable.runTask(main.getmian());
                 填充数量++;
-                计数++;
             }
         }
 
