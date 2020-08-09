@@ -22,17 +22,16 @@ public class main extends JavaPlugin {
         getLogger().info("开始加载..");
         getLogger().info("检查Residence插件是否加载");
         peizhi = new peizhi();
+        //检查res领地插件
         PluginManager pm = getServer().getPluginManager();
         Plugin p = pm.getPlugin("Residence");
-        boolean resjiazai;
-        //res加载设置为true，未加载设置为false
-        resjiazai = p==null?false:true;
-
-        //输出日志
-        if(resjiazai){
-            getLogger().info("Residence领地插件已加载，启用兼容功能");
-        }else {
-            getLogger().info("Residence领地插件未加载，不启用兼容功能");
+        if(p!=null) {
+            if(!p.isEnabled()) {
+                getLogger().info("检测到Residence，与检测到Residence对接");
+                pm.enablePlugin(p);
+            }
+        } else {
+            getLogger().info("没有安装Residence取消Residence的全部功能");
         }
 
         //加载控制器
