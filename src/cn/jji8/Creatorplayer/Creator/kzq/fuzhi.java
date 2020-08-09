@@ -165,7 +165,7 @@ public class fuzhi implements kzq{
             main.getmian().getLogger().warning("未找到取消按钮按钮简介配置，已重新生成");
             kk = new ArrayList<String>();
             kk.add("取消正在执行的填充");
-            pz.set("按钮简介",kk);
+            pz.set("取消按钮按钮简介",kk);
             baocun =true;
         }
         wpsj.setLore(k);
