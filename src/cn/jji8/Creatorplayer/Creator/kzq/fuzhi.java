@@ -153,7 +153,7 @@ public class fuzhi implements kzq{
             y = pz.getString("取消按钮名字");
         }else {
             main.getmian().getLogger().warning("未找到取消按钮按钮名字配置，已重新生成");
-            pz.set("取消按钮按钮名字","取消填充");
+            pz.set("取消按钮名字","取消填充");
             y = "取消填充";
             baocun =true;
         }
