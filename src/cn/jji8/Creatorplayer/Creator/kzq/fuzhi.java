@@ -388,19 +388,21 @@ public class fuzhi implements kzq{
                     @Override
                     public void run() {
                         if(main.res){
-                            ClaimedResidence res = ResidenceApi.getResidenceManager().getByLoc(blcock.getLocation());
-                            ClaimedResidence res1 = ResidenceApi.getResidenceManager().getByLoc(Block2.getLocation());
-                            if(res==null|res1==null){
-                                dian.wanjia.sendTitle("","无权限，已复制"+计数+"方块",0,10,40);
-                                return;
-                            }
-                            if(!res.getPermissions().playerHas(dian.wanjia.getName(),"build",true)){
-                                dian.wanjia.sendTitle("","无权限，已复制"+计数+"方块",0,10,40);
-                                return;
-                            }
-                            if(!res1.getPermissions().playerHas(dian.wanjia.getName(),"build",true)){
-                                dian.wanjia.sendTitle("","无权限，已复制"+计数+"方块",0,10,40);
-                                return;
+                            if(main.peizhi.只允许在自己领地中使用创作者){
+                                ClaimedResidence res = ResidenceApi.getResidenceManager().getByLoc(blcock.getLocation());
+                                ClaimedResidence res1 = ResidenceApi.getResidenceManager().getByLoc(Block2.getLocation());
+                                if(res==null|res1==null){
+                                    dian.wanjia.sendTitle("","无权限，已复制"+计数+"方块",0,10,40);
+                                    return;
+                                }
+                                if(!res.getPermissions().playerHas(dian.wanjia.getName(),"build",true)){
+                                    dian.wanjia.sendTitle("","无权限，已复制"+计数+"方块",0,10,40);
+                                    return;
+                                }
+                                if(!res1.getPermissions().playerHas(dian.wanjia.getName(),"build",true)){
+                                    dian.wanjia.sendTitle("","无权限，已复制"+计数+"方块",0,10,40);
+                                    return;
+                                }
                             }
                         }
                         Block2.setType(blcock.getType());

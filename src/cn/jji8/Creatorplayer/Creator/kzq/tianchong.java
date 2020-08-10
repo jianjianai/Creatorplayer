@@ -311,9 +311,11 @@ public class tianchong implements kzq{
                     @Override
                     public void run() {
                         if(main.res){
-                            if(!ResidenceApi.getResidenceManager().getByLoc(blcock.getLocation()).getPermissions().playerHas(dian.wanjia.getName(),"build",true)){
-                                dian.wanjia.sendTitle("","无权限，已填充"+计数+"方块",0,10,40);
-                                return;
+                            if(main.peizhi.只允许在自己领地中使用创作者){
+                                if(!ResidenceApi.getResidenceManager().getByLoc(blcock.getLocation()).getPermissions().playerHas(dian.wanjia.getName(),"build",true)){
+                                    dian.wanjia.sendTitle("","无权限，已填充"+计数+"方块",0,10,40);
+                                    return;
+                                }
                             }
                         }
                         blcock.setType(wp);
