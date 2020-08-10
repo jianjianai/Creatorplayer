@@ -116,37 +116,38 @@ public class dian {
 
 //set get方法
     public void setWeizi1(Location weizi1) {
-        if(main.res){
-            if(main.peizhi.只允许在自己领地中使用创作者){
-                ClaimedResidence res = ResidenceApi.getResidenceManager().getByLoc(weizi1);
-                if(res==null){
-                    wanjia.sendTitle("","你只可以在领地中使用创作者",0,10,40);
-                    return;
-                }else if(!res.getPermissions().playerHas(wanjia,"build",true)){
-                    wanjia.sendTitle("","你没有权限在这里使用创作者",0,10,40);
-                    return;
-                }
-            }
+        if(!ifquanxian(weizi1)){
+            return;
         }
         wanjia.getPlayer().sendTitle("","已选择第一个点",0,10,40);
         this.weizi1 = weizi1;
     }
     public void setWeizi2(Location weizi2) {
-        if(main.res){
-            if(main.peizhi.只允许在自己领地中使用创作者){
-                ClaimedResidence res = ResidenceApi.getResidenceManager().getByLoc(weizi2);
-                if(res==null){
-                    wanjia.sendTitle("","你只可以在领地中使用创作者",0,10,40);
-                    return;
-                }else if(!res.getPermissions().playerHas(wanjia,"build",true)){
-                    wanjia.sendTitle("","你没有权限在这里使用创作者",0,10,40);
-                    return;
-                }
-            }
+        if(!ifquanxian(weizi2)){
+            return;
         }
         wanjia.getPlayer().sendTitle("","已选择第二个点",0,10,40);
         this.weizi2 = weizi2;
     }
+    /**
+     * 用于判断是否有权限
+     * */
+    boolean ifquanxian(Location weizi1){
+        if(main.res){
+            ClaimedResidence res = ResidenceApi.getResidenceManager().getByLoc(weizi1);
+            if(res==null){
+                if(main.peizhi.只允许在自己领地中使用创作者){
+                    wanjia.sendTitle("","你只可以在领地中使用创作者",0,10,40);
+                    return false;
+                }
+            }else if(!res.getPermissions().playerHas(wanjia,"build",true)){
+                wanjia.sendTitle("","你没有权限在这里使用创作者",0,10,40);
+                return false;
+            }
+        }
+        return true;
+    }
+
     public Location getWeizi1() {
         return weizi1;
     }
