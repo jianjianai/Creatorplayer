@@ -151,6 +151,9 @@ public class lizi implements kzq{
      * */
     @Override
     public void jiazai() {
+        if (!dian.wanjia.hasPermission("Creatorplayer.lizi")){//判断权限
+            return;
+        }
         箱子.setItem(按钮位置,按钮);
         if(显示){
             箱子.setItem(填充物品放置位置,填充按钮);
@@ -164,6 +167,9 @@ public class lizi implements kzq{
      * */
     @Override
     public void dianji(InventoryClickEvent 点击位置) {
+        if (!dian.wanjia.hasPermission("Creatorplayer.lizi")){//判断权限
+            return;
+        }
         boolean f = false;
         if(点击位置.getRawSlot()!=按钮位置){
             if(!显示){

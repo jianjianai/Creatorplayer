@@ -172,6 +172,9 @@ public class tianchong implements kzq{
      * */
     @Override
     public void jiazai(){
+        if (!dian.wanjia.hasPermission("Creatorplayer.tianchong")){//判断权限
+            return;
+        }
         箱子.setItem(填充按钮位置,填充按钮);
         箱子.setItem(取消按钮位置,取消按钮);
     }
@@ -180,6 +183,9 @@ public class tianchong implements kzq{
      * */
     @Override
     public void dianji(InventoryClickEvent 点击位置) {
+        if (!dian.wanjia.hasPermission("Creatorplayer.tianchong")){//判断权限
+            return;
+        }
         if(点击位置.getRawSlot()==取消按钮位置){
             点击位置.setCancelled(true);
             点击位置.getWhoClicked().closeInventory();

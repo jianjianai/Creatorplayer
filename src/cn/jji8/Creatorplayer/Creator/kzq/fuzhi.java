@@ -227,6 +227,9 @@ public class fuzhi implements kzq{
      */
     @Override
     public void jiazai() {
+        if (!dian.wanjia.hasPermission("Creatorplayer.fuzi")){//判断权限
+            return;
+        }
         箱子.setItem(按钮位置,按钮);
         if(wz1!=null&wz2!=null){
             if(wp){
@@ -247,6 +250,9 @@ public class fuzhi implements kzq{
      */
     @Override
     public void dianji(InventoryClickEvent 点击位置) {
+        if (!dian.wanjia.hasPermission("Creatorplayer.fuzi")){//判断权限
+            return;
+        }
         if(点击位置.getRawSlot()==按钮位置){
             点击位置.setCancelled(true);
             if(dian.getWeizi1()==null){
